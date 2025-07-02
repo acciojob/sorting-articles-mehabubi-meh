@@ -5,22 +5,20 @@ const bands = [
   'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'
 ];
 
-// Strip articles for sorting
-function stripArticle(str) {
-  return str.replace(/^(a |an |the )/i, '').trim();
+// Function to remove leading "a", "an", "the" for sorting
+function stripArticle(name) {
+  return name.replace(/^(a |an |the )/i, '').trim();
 }
 
-// Create a sorted copy of the original array (do not mutate original)
+// Sort without mutating original array
 const sortedBands = bands.slice().sort((a, b) => {
-  const nameA = stripArticle(a).toLowerCase();
-  const nameB = stripArticle(b).toLowerCase();
-  return nameA.localeCompare(nameB);
+  return stripArticle(a).localeCompare(stripArticle(b));
 });
 
-// Render to DOM
+// Render sorted original names
 const ul = document.getElementById("band");
 sortedBands.forEach(band => {
   const li = document.createElement("li");
-  li.textContent = band;
+  li.textContent = band; // show original full name
   ul.appendChild(li);
 });
